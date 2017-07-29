@@ -21,10 +21,6 @@ Left.prototype.map = function(f) {
   return this;
 };
 
-Left.prototype.join = function() {
-  return this;
-}
-
 var Right = function(x) {
   this.__value = x;
 };
@@ -35,10 +31,6 @@ Right.of = function(x) {
 
 Right.prototype.map = function(f) {
   return Right.of(f(this.__value));
-}
-
-Right.prototype.join = function() {
-  return Right.of(this.__value);
 }
 
 
@@ -104,7 +96,7 @@ var pureLog = function(x) {
 
 //  ex4 :: Email -> Either String (IO String)
 var ex4 = compose(
-    chain(chain(pureLog)), chain(chain(emailBlast)), chain(addToMailingList), validateEmail
+    map(chain(pureLog)), map(chain(emailBlast)), map(addToMailingList), validateEmail
 );
 
 var result = ex4('my@great.com')
