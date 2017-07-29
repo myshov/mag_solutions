@@ -38,7 +38,7 @@ Right.prototype.map = function(f) {
 }
 
 Right.prototype.join = function() {
-  return this.__value;
+  return Right.of(this.__value);
 }
 
 
@@ -104,12 +104,12 @@ var pureLog = function(x) {
 
 //  ex4 :: Email -> Either String (IO String)
 var ex4 = compose(
-    chain(pureLog), chain(emailBlast), chain(addToMailingList), validateEmail
+    chain(chain(pureLog)), chain(chain(emailBlast)), chain(addToMailingList), validateEmail
 );
 
 var result = ex4('my@great.com')
 if (result instanceof Left) {
     console.log(result.__value);
 } else {
-    result.unsafePerformIO();
+    result.__value.unsafePerformIO();
 }
